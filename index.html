@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+	<title>Rezepte</title>
+</head>
+<body>
+	<ul>
+		<li>
+			<a href="/rezepte1.html" class="foo">Rezepte 1</a>
+		</li>
+		<li>
+			<a href="/rezepte2.html">Rezepte 2</a>
+		</li>
+		<li>
+			<a href="/rezepte3.html">Rezepte 3</a>
+		</li>
+	</ul>
+	<script>
+(async function () {
+
+navigator.serviceWorker.register("./sw-dist.js", {
+	scope: "./"
+}).then(reg => {
+	if(reg.scope) {
+		console.log("registered Service Worker for", reg.scope);
+	} else {
+		console.log("using existing Service Worker");
+	}
+});
+
+}());
+	</script>
+</body>
+
