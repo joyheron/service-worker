@@ -14,9 +14,7 @@ self.addEventListener("activate", ev => {
 
 self.addEventListener("fetch", ev => {
 	log("retrieving", ev.request.url);
-	ev.respondWith(staleWhileRevalidate(ev).then(response => {
-		return response;
-	}));
+	ev.respondWith(staleWhileRevalidate(ev));
 });
 
 async function cacheFirst(ev) {
@@ -81,7 +79,6 @@ async function add2cacheAndPrefetchUrls(request, response) {
 }
 
 function prefetch(clone) {
-	// log(clone);
 	clone.text().then(html => {
 		parseLinks(html).forEach(link => {
 			retrieveAndAddToCache(link);
@@ -110,6 +107,7 @@ function log(...msg) {
 	console.log(`[Service Worker] v${VERSION}`, ...msg); // eslint-disable-line no-console
 }
 
+// TODO: Use a different library which has a better API for extracting links
 function parseLinks(html) {
 	let parsed = parse(html);
 	return findLinks(parsed);
